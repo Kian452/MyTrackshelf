@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login – Trackshelf</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo"><span class="logo-dot"></span>Trackshelf</div>
+    <h1>Welcome back</h1>
+    <div class="form-error hidden" id="form-error"></div>
+    <form id="login-form">
+      <div class="field">
+        <label for="identifier">Username or email</label>
+        <input type="text" id="identifier" name="identifier" autocomplete="username" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn-primary" id="submit-btn">Log in</button>
+    </form>
+    <div class="auth-switch">Don't have an account? <a href="register.html">Register</a></div>
+  </div>
+</div>
+<script type="module">
+  import { login, getMe } from './js/auth.js';
+
+  const form = document.getElementById('login-form');
+  const errorBox = document.getElementById('form-error');
+  const submitBtn = document.getElementById('submit-btn');
+
+  getMe().then((user) => {
+    if (user) window.location.href = 'index.html';
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.classList.add('hidden');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Logging in…';
+    try {
+      const identifier = document.getElementById('identifier').value.trim();
+      const password = document.getElementById('password').value;
+      await login(identifier, password);
+      window.location.href = 'index.html';
+    } catch (err) {
+      errorBox.textContent = err.message || 'Login failed';
+      errorBox.classList.remove('hidden');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Log in';
+    }
+  });
+</script>
+</body>
+</html>
