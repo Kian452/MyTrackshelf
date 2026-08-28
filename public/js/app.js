@@ -520,7 +520,7 @@ function wireNewPlaylistModal() {
 function wirePlaylistViewActions() {
   document.getElementById('btn-rename-playlist').addEventListener('click', async () => {
     const current = state.currentPlaylist;
-    const name = window.prompt('Neuer Name für die Playlist', current.name);
+    const name = window.prompt('New name for the playlist', current.name);
     if (!name || !name.trim() || name.trim() === current.name) return;
     try {
       await renamePlaylist(current.id, name.trim());
@@ -536,7 +536,7 @@ function wirePlaylistViewActions() {
 
   document.getElementById('btn-delete-playlist').addEventListener('click', async () => {
     const current = state.currentPlaylist;
-    if (!confirm(`Playlist "${current.name}" wirklich löschen?`)) return;
+    if (!confirm(`Really delete the playlist "${current.name}"?`)) return;
     try {
       await deletePlaylist(current.id);
       state.playlists = await fetchPlaylists();
@@ -571,7 +571,7 @@ async function init() {
     state.favorites = favorites;
     state.favoriteIds = new Set(favorites.map((t) => Number(t.id)));
   } catch (err) {
-    showToast('Fehler beim Laden der Daten', 'error');
+    showToast('Failed to load data', 'error');
   }
 
   const newPlaylistModal = wireNewPlaylistModal();

@@ -10,7 +10,7 @@ function openAddToPlaylistPopover(anchorBtn, track, { getPlaylists, onAddToPlayl
   if (playlists.length === 0) {
     const empty = document.createElement('div');
     empty.className = 'popover-empty';
-    empty.textContent = 'Keine Playlists vorhanden';
+    empty.textContent = 'No playlists yet';
     pop.appendChild(empty);
   } else {
     playlists.forEach((pl) => {
@@ -63,10 +63,10 @@ export function renderTrackList(container, tracks, options) {
     empty.className = 'track-list-empty';
     empty.textContent =
       context === 'favorites'
-        ? 'Noch keine Favoriten. Markiere Songs mit dem Herz-Symbol.'
+        ? 'No favorites yet. Mark songs with the heart icon.'
         : context === 'playlist'
-        ? 'Diese Playlist ist noch leer.'
-        : 'Noch keine Songs hochgeladen.';
+        ? 'This playlist is still empty.'
+        : 'No songs uploaded yet.';
     container.appendChild(empty);
     return;
   }
@@ -90,7 +90,7 @@ export function renderTrackList(container, tracks, options) {
     const playBtn = document.createElement('button');
     playBtn.className = 'track-play-btn';
     playBtn.innerHTML = ICONS.play;
-    playBtn.setAttribute('aria-label', 'Abspielen');
+    playBtn.setAttribute('aria-label', 'Play');
     playBtn.addEventListener('click', () => onPlay(track, index, tracks));
     row.appendChild(playBtn);
 
@@ -101,7 +101,7 @@ export function renderTrackList(container, tracks, options) {
     title.textContent = track.title;
     const artist = document.createElement('div');
     artist.className = 'track-artist';
-    artist.textContent = track.artist || 'Unbekannter Künstler';
+    artist.textContent = track.artist || 'Unknown artist';
     info.appendChild(title);
     info.appendChild(artist);
     row.appendChild(info);
@@ -118,7 +118,7 @@ export function renderTrackList(container, tracks, options) {
     const isFav = favoriteIds.has(Number(track.id));
     favBtn.className = `icon-btn${isFav ? ' active' : ''}`;
     favBtn.innerHTML = isFav ? ICONS.heartFilled : ICONS.heart;
-    favBtn.setAttribute('aria-label', 'Favorit umschalten');
+    favBtn.setAttribute('aria-label', 'Toggle favorite');
     favBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       onToggleFavorite(track);
@@ -128,7 +128,7 @@ export function renderTrackList(container, tracks, options) {
     const addBtn = document.createElement('button');
     addBtn.className = 'icon-btn';
     addBtn.innerHTML = ICONS.plus;
-    addBtn.setAttribute('aria-label', 'Zu Playlist hinzufügen');
+    addBtn.setAttribute('aria-label', 'Add to playlist');
     addBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       openAddToPlaylistPopover(addBtn, track, { getPlaylists, onAddToPlaylist });
@@ -139,7 +139,7 @@ export function renderTrackList(container, tracks, options) {
       const removeBtn = document.createElement('button');
       removeBtn.className = 'icon-btn danger';
       removeBtn.innerHTML = ICONS.remove;
-      removeBtn.setAttribute('aria-label', 'Aus Playlist entfernen');
+      removeBtn.setAttribute('aria-label', 'Remove from playlist');
       removeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         onRemoveFromPlaylist(track);
@@ -149,7 +149,7 @@ export function renderTrackList(container, tracks, options) {
       const deleteBtn = document.createElement('button');
       deleteBtn.className = 'icon-btn danger';
       deleteBtn.innerHTML = ICONS.trash;
-      deleteBtn.setAttribute('aria-label', context === 'favorites' ? 'Favorit entfernen' : 'Track löschen');
+      deleteBtn.setAttribute('aria-label', context === 'favorites' ? 'Remove favorite' : 'Delete track');
       deleteBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         if (context === 'favorites') {

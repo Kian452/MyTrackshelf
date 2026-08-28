@@ -36,11 +36,11 @@ function createProgressRow(listEl, filename) {
 
 async function uploadOneFile(file, listEl, onUploaded) {
   if (!hasAllowedExtension(file.name)) {
-    showToast(`${file.name}: nicht unterstützter Dateityp`, 'error');
+    showToast(`${file.name}: unsupported file type`, 'error');
     return;
   }
   if (file.size > MAX_FILE_SIZE) {
-    showToast(`${file.name}: Datei ist größer als 50 MB`, 'error');
+    showToast(`${file.name}: file is larger than 50 MB`, 'error');
     return;
   }
 
@@ -54,8 +54,8 @@ async function uploadOneFile(file, listEl, onUploaded) {
     row.remove();
     (data.tracks || []).forEach((track) => onUploaded(track));
   } catch (err) {
-    row.setError(err.message || 'Fehler');
-    showToast(`${file.name}: ${err.message || 'Upload fehlgeschlagen'}`, 'error');
+    row.setError(err.message || 'Error');
+    showToast(`${file.name}: ${err.message || 'Upload failed'}`, 'error');
   }
 }
 

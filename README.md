@@ -1,4 +1,4 @@
-# Trackshelf
+# MyTrackshelf
 
 A minimalist, self-hosted music player with real user accounts.
 Users upload their own audio files, organize them into playlists, mark
